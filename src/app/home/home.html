@@ -1,0 +1,266 @@
+<!-- Add Product Button -->
+<div class="container">
+    <button class="btn btn-outline-primary float-end mt-5" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        (click)="openAddProduct()">
+
+        Add Products
+
+    </button>
+</div>
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">
+                        Search Products
+                    </label>
+                    <input type="text" class="form-control" placeholder="Search by name, code, category or supplier..."
+                        [(ngModel)]="searchText">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Product Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    {{ isEdit ? 'Edit Product' : 'Add Product' }}
+                </h1>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+
+            </div>
+
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <!-- Product Name -->
+                    <div class="col-md-6 my-2">
+
+                        <label class="form-label">
+                            Product Name
+                        </label>
+
+                        <input [(ngModel)]="productName" type="text" placeholder="Product Name" class="form-control">
+
+                    </div>
+
+
+                    <!-- Product Code -->
+                    <div class="col-md-6 my-2">
+
+                        <label class="form-label">
+                            Product Code
+                        </label>
+
+                        <input [(ngModel)]="productCode" type="text" placeholder="Product Code" class="form-control">
+
+                    </div>
+
+
+                    <!-- Category -->
+                    <div class="col-md-6 my-2">
+
+                        <label class="form-label">
+                            Category
+                        </label>
+
+                        <input [(ngModel)]="category" type="text" placeholder="Enter Category" class="form-control">
+
+                    </div>
+
+
+                    <!-- Price -->
+                    <div class="col-md-6 my-2">
+
+                        <label class="form-label">
+                            Price
+                        </label>
+
+                        <input [(ngModel)]="price" type="number" placeholder="Enter Price" class="form-control">
+
+                    </div>
+
+
+                    <!-- Quantity -->
+                    <div class="col-md-6 my-2">
+
+                        <label class="form-label">
+                            Quantity
+                        </label>
+
+                        <input [(ngModel)]="quantity" type="number" placeholder="Enter Quantity" class="form-control">
+
+                    </div>
+
+
+                    <!-- Supplier Name -->
+                    <div class="col-md-6 my-2">
+
+                        <label class="form-label">
+                            Supplier Name
+                        </label>
+
+                        <input [(ngModel)]="supplierName" type="text" placeholder="Supplier Name" class="form-control">
+
+                    </div>
+
+
+                    <!-- Stock Status -->
+                    <div class="col-md-6 my-2">
+
+                        <label class="form-label">
+                            Stock Status
+                        </label>
+
+                        <select [(ngModel)]="stockStatus" class="form-select">
+
+                            <option value="">Select Stock Status</option>
+                            <option value="In Stock">In Stock</option>
+                            <option value="Low Stock">Low Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Added Date -->
+                    <div class="col-md-6 my-2">
+
+                        <label class="form-label">
+                            Added Date
+                        </label>
+
+                        <input [(ngModel)]="addedDate" type="date" class="form-control">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+
+                    Close
+
+                </button>
+
+
+                @if(!isEdit) {
+
+                <button (click)="addProduct()" type="button" class="btn btn-primary">
+
+                    Save Product
+
+                </button>
+
+                }
+
+                @else {
+
+                <button (click)="editProduct()" type="button" class="btn btn-primary">
+
+                    Update Product
+
+                </button>
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Product Cards -->
+<div class="container">
+
+    <div class="row mt-5">
+
+        @for (item of productData() | search: searchText;
+        track $index) {
+
+        <div class="col-lg-4 col-md-6 col-sm-12 mt-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <!-- Product Name -->
+                    <h5 class="card-title fw-bold mb-3">
+                        {{ item.productName }}
+                    </h5>
+                    <!-- Product Code -->
+                    <p class="card-text mb-2">
+                        <strong>Product Code:</strong>
+                        {{ item.productCode }}
+                    </p>
+                    <!-- Category -->
+                    <p class="card-text mb-2">
+                        <strong>Category:</strong>
+                        {{ item.category }}
+                    </p>
+                    <!-- Price -->
+                    <p class="card-text mb-2">
+                        <strong>Price:</strong>
+                        ₹{{ item.price }}
+                    </p>
+                    <!-- Quantity -->
+                    <p class="card-text mb-2">
+                        <strong>Quantity:</strong>
+                        {{ item.quantity }}
+                    </p>
+                    <!-- Supplier -->
+                    <p class="card-text mb-2">
+                        <strong>Supplier:</strong>
+                        {{ item.supplierName }}
+                    </p>
+                    <!-- Stock Status -->
+                    <p class="card-text mb-2">
+                        <strong>Stock Status:</strong>
+                        <span>
+                            {{ item.stockStatus }}
+                        </span>
+                    </p>
+                    <!-- Added Date -->
+                    <p class="card-text mb-3">
+                        <strong>Added Date:</strong>
+                        {{ item.addedDate }}
+                    </p>
+                </div>
+                <!-- Card Buttons -->
+                <div class="card-footer bg-white border-0 pb-3">
+                    <div class="d-flex justify-content-evenly">
+                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-warning"
+                            (click)="getAProduct(item._id)">
+                            Edit
+                        </button>
+                        <button class="btn btn-danger" (click)="deleteData(item._id)">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+</div>
